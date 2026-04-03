@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seven7 Cars – La Agencia Multimarca de Chascomús</title>
+  <meta name="description" content="Seven7 Cars, la agencia multimarca de Chascomús. Usados seleccionados, 0km con financiación. Chevrolet, Ford, VW, Peugeot y más. Belgrano 973, Chascomús." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;900&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: '#0f1e3a',
+            'navy-mid': '#162644',
+            'navy-light': '#1e3560',
+            accent: '#1d6cf0',
+            'accent-dark': '#1558cc',
+            'accent-light': '#4a8fff',
+            wa: '#25D366',
+            'wa-dark': '#128C7E',
+            silver: '#c8d0dc',
+            'silver-light': '#edf1f7',
+          },
+          fontFamily: {
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            body: ['Barlow', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    * { font-family: 'Barlow', sans-serif; }
+    h1, h2, h3, .display { font-family: 'Barlow Condensed', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    #navbar { transition: background 0.3s, box-shadow 0.3s; }
+    #navbar.scrolled {
+      background: rgba(15, 30, 58, 0.97);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+
+    .car-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .car-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(29,108,240,0.18); }
+
+    .img-placeholder {
+      background: linear-gradient(135deg, #1e3560 0%, #0f1e3a 60%, #162644 100%);
+    }
+
+    .badge-usado { background: #e8a020; color: #fff; }
+    .badge-0km { background: #1d6cf0; color: #fff; }
+    .star { color: #f59e0b; }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .wa-float { animation: pulse-wa 2.5s infinite; }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+      50% { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+
+    .map-wrapper { border: 3px solid #1d6cf0; border-radius: 12px; overflow: hidden; }
+    .gradient-navy { background: linear-gradient(160deg, #0f1e3a 0%, #162644 100%); }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20consultar%20el%20stock%20disponible"
+   target="_blank"
+   class="wa-float fixed bottom-6 right-6 z-50 w-16 h-16 bg-wa rounded-full flex items-center justify-center shadow-xl hover:bg-wa-dark transition-colors"
+   aria-label="Contactar por WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-40 bg-navy/95 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center font-display font-black text-white text-xl leading-none">
+        S<span class="text-yellow-400">7</span>
+      </div>
+      <div class="leading-tight">
+        <div class="font-display font-black text-white text-xl tracking-wide leading-none">SEVEN<span class="text-accent">7</span></div>
+        <div class="text-silver text-[10px] font-medium tracking-widest uppercase leading-none">el auto que buscas</div>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+      <a href="#catalogo" class="text-silver hover:text-white transition-colors">Catálogo</a>
+      <a href="#nosotros" class="text-silver hover:text-white transition-colors">Nosotros</a>
+      <a href="#resenas" class="text-silver hover:text-white transition-colors">Reseñas</a>
+      <a href="#contacto" class="text-silver hover:text-white transition-colors">Contacto</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="tel:02241436114"
+         class="md:hidden flex items-center gap-2 bg-navy-light border border-accent/40 text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-accent transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+        </svg>
+        Llamar
+      </a>
+      <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20consultar%20el%20stock"
+         target="_blank"
+         class="hidden md:flex items-center gap-2 bg-wa text-white text-sm font-semibold px-5 py-2.5 rounded-full hover:bg-wa-dark transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="relative min-h-screen flex items-center gradient-navy overflow-hidden">
+  <div class="absolute inset-0 opacity-5"
+       style="background-image: repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(29,108,240,0.6) 60px), repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(29,108,240,0.6) 60px); background-size: 60px 60px;">
+  </div>
+  <div class="absolute -right-40 top-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full border border-accent/10 opacity-40 hidden lg:block"></div>
+  <div class="absolute -right-20 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-accent/15 opacity-40 hidden lg:block"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-16 relative z-10 w-full">
+    <div class="max-w-2xl">
+      <div class="inline-flex items-center gap-2 bg-accent/15 border border-accent/30 rounded-full px-4 py-1.5 mb-6">
+        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+        <span class="text-accent-light text-sm font-semibold tracking-wide uppercase">Chascomús · Buenos Aires</span>
+      </div>
+
+      <h1 class="font-display font-black text-5xl sm:text-6xl lg:text-7xl text-white leading-none mb-5 uppercase">
+        Seven<span class="text-accent">7</span><br />
+        <span class="text-silver text-4xl sm:text-5xl lg:text-6xl font-bold">El auto que buscás,<br />en Chascomús.</span>
+      </h1>
+
+      <p class="text-silver text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
+        Usados seleccionados con garantía y los mejores 0km. Financiación a tu medida y toma de usados al mejor precio. <span class="text-white font-semibold">Agencia multimarca de la zona.</span>
+      </p>
+
+      <div class="flex flex-wrap gap-4 mb-12">
+        <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20consultar%20el%20stock%20disponible"
+           target="_blank"
+           class="flex items-center gap-3 bg-wa hover:bg-wa-dark text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors shadow-lg shadow-wa/20">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" viewBox="0 0 24 24" fill="white">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Consultar Stock por WhatsApp
+        </a>
+        <a href="tel:02241436114"
+           class="flex items-center gap-3 border-2 border-white/25 hover:border-white/50 text-white font-bold text-lg px-8 py-4 rounded-xl transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/>
+          </svg>
+          02241 43-6114
+        </a>
+      </div>
+
+      <div class="flex flex-wrap gap-2">
+        <span class="text-silver/60 text-sm font-medium mr-1">Marcas:</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Chevrolet</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Volkswagen</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Ford</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Peugeot</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Fiat</span>
+        <span class="section-label text-xs bg-white/8 border border-white/12 text-silver px-3 py-1 rounded-full">Renault + más</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-silver/40">
+    <span class="text-xs tracking-widest uppercase font-medium">Ver catálogo</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+    </svg>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section id="catalogo" class="bg-silver-light py-20 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="mb-14">
+      <p class="section-label text-accent font-bold text-sm mb-2">Catálogo Seven7</p>
+      <h2 class="font-display font-black text-4xl sm:text-5xl text-navy uppercase">Nuestro <span class="text-accent">Stock Disponible</span></h2>
+      <p class="text-gray-500 mt-3 max-w-xl">Tocá en cualquier auto para pedir la ficha técnica completa por WhatsApp. Las fotos se agregan próximamente.</p>
+    </div>
+
+    <!-- USADOS -->
+    <div class="mb-12">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-yellow-500 rounded-full"></div>
+        <h3 class="font-display font-black text-2xl text-navy uppercase tracking-wide">Usados Seleccionados</h3>
+        <span class="bg-yellow-500/15 text-yellow-700 text-xs font-bold px-3 py-1 rounded-full section-label">Con Garantía</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Chevrolet Agile -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-usado text-xs font-bold px-2 py-0.5 rounded-full section-label">USADO</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Chevrolet Agile</h4>
+            <p class="text-gray-400 text-sm mb-4">Hatchback · Nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Chevrolet%20Agile"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir ficha técnica
+            </a>
+          </div>
+        </div>
+
+        <!-- Chevrolet Tracker -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-usado text-xs font-bold px-2 py-0.5 rounded-full section-label">USADO</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Chevrolet Tracker</h4>
+            <p class="text-gray-400 text-sm mb-4">SUV · Turbo nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Chevrolet%20Tracker"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir ficha técnica
+            </a>
+          </div>
+        </div>
+
+        <!-- Peugeot 2008 -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-usado text-xs font-bold px-2 py-0.5 rounded-full section-label">USADO</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Peugeot 2008</h4>
+            <p class="text-gray-400 text-sm mb-4">SUV · Nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Peugeot%202008"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir ficha técnica
+            </a>
+          </div>
+        </div>
+
+        <!-- VW Polo -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-usado text-xs font-bold px-2 py-0.5 rounded-full section-label">USADO</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Volkswagen Polo</h4>
+            <p class="text-gray-400 text-sm mb-4">Sedán · Nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Volkswagen%20Polo"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Pedir ficha técnica
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 0KM -->
+    <div>
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-1 h-8 bg-accent rounded-full"></div>
+        <h3 class="font-display font-black text-2xl text-navy uppercase tracking-wide">Autos 0KM</h3>
+        <span class="bg-accent/10 text-accent text-xs font-bold px-3 py-1 rounded-full section-label">Financiación Disponible</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Peugeot 208 0km -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 ring-2 ring-accent/20">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-0km text-xs font-bold px-2 py-0.5 rounded-full section-label">0KM</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Peugeot 208</h4>
+            <p class="text-gray-400 text-sm mb-4">Hatchback · Nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Peugeot%20208%200km"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              Consultar disponibilidad
+            </a>
+          </div>
+        </div>
+
+        <!-- VW Taos 0km -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 ring-2 ring-accent/20">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-0km text-xs font-bold px-2 py-0.5 rounded-full section-label">0KM</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">VW Taos</h4>
+            <p class="text-gray-400 text-sm mb-4">SUV · Turbo nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20VW%20Taos%200km"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              Consultar disponibilidad
+            </a>
+          </div>
+        </div>
+
+        <!-- Chevrolet Cruze 0km -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 ring-2 ring-accent/20">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-0km text-xs font-bold px-2 py-0.5 rounded-full section-label">0KM</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Chevrolet Cruze</h4>
+            <p class="text-gray-400 text-sm mb-4">Hatchback · Turbo nafta</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Chevrolet%20Cruze%200km"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              Consultar disponibilidad
+            </a>
+          </div>
+        </div>
+
+        <!-- Ford EcoSport 0km -->
+        <div class="car-card bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 ring-2 ring-accent/20">
+          <div class="img-placeholder aspect-video flex flex-col items-center justify-center gap-2 p-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <p class="text-white/30 text-xs font-display font-bold tracking-widest text-center">FOTO PRÓXIMAMENTE</p>
+          </div>
+          <div class="p-5">
+            <span class="badge-0km text-xs font-bold px-2 py-0.5 rounded-full section-label">0KM</span>
+            <h4 class="font-display font-black text-xl text-navy mt-2 mb-1 leading-none">Ford EcoSport</h4>
+            <p class="text-gray-400 text-sm mb-4">SUV · Nafta / GNC</p>
+            <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20info%20del%20Ford%20EcoSport%200km"
+               target="_blank"
+               class="w-full flex items-center justify-center gap-2 bg-accent hover:bg-accent-dark text-white font-bold text-sm py-3 rounded-xl transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              Consultar disponibilidad
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <p class="text-gray-500 mb-4">¿No encontraste lo que buscás? Tenemos más stock disponible.</p>
+      <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20estoy%20buscando%20un%20auto%20y%20quiero%20ver%20todo%20el%20stock"
+         target="_blank"
+         class="inline-flex items-center gap-3 bg-navy hover:bg-navy-light text-white font-bold text-lg px-10 py-4 rounded-xl transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        Ver catálogo completo por WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAL LOCAL -->
+<section id="nosotros" class="gradient-navy py-20 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-14">
+      <p class="section-label text-accent font-bold text-sm mb-2">Por qué elegirnos</p>
+      <h2 class="font-display font-black text-4xl sm:text-5xl text-white uppercase">La Agencia Multimarca<br /><span class="text-accent">de Chascomús</span></h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 transition-colors">
+        <div class="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-accent-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="font-display font-black text-2xl text-white mb-3 uppercase">Trayectoria Local</h3>
+        <p class="text-silver leading-relaxed">Años de experiencia en Chascomús y la zona. Te conocemos de antes y nos importa que te vayas contento. La palabra es la que vale.</p>
+        <div class="mt-5 flex items-center gap-2 text-accent-light text-sm font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Agencia de confianza
+        </div>
+      </div>
+
+      <div class="bg-accent/10 border border-accent/25 rounded-2xl p-8 hover:bg-accent/15 transition-colors">
+        <div class="w-14 h-14 bg-accent/30 rounded-xl flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-accent-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3 class="font-display font-black text-2xl text-white mb-3 uppercase">Financiación Directa</h3>
+        <p class="text-silver leading-relaxed">Financiación a tu medida, sin tanto papeleo. Te asesoramos para que encuentres el plan que mejor se adapta a tus ingresos y posibilidades.</p>
+        <div class="mt-5 flex items-center gap-2 text-accent-light text-sm font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Planes en pesos y USD
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/8 transition-colors">
+        <div class="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center mb-5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-accent-light" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3 class="font-display font-black text-2xl text-white mb-3 uppercase">Gestoría Propia</h3>
+        <p class="text-silver leading-relaxed">Nos encargamos de todo el papeleo. Transferencias, radicaciones y trámites rápidos para que te lleves el auto sin dolores de cabeza.</p>
+        <div class="mt-5 flex items-center gap-2 text-accent-light text-sm font-semibold">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Sin vueltas ni demoras
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white/4 border border-white/10 rounded-2xl p-8">
+      <p class="section-label text-silver/60 text-sm text-center mb-6">Marcas que trabajamos</p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">CHEVROLET</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">VOLKSWAGEN</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">FORD</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">PEUGEOT</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">FIAT</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">RENAULT</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">HONDA</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">CITROËN</span>
+        <span class="bg-white/8 border border-white/15 text-white font-display font-bold text-sm px-5 py-2.5 rounded-full tracking-wide">JEEP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section id="resenas" class="bg-silver-light py-20 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label text-accent font-bold text-sm mb-2">Lo que dicen nuestros clientes</p>
+      <h2 class="font-display font-black text-4xl sm:text-5xl text-navy uppercase">Reseñas <span class="text-accent">Google</span></h2>
+      <div class="flex items-center justify-center gap-2 mt-4">
+        <span class="star text-2xl">★★★★★</span>
+        <span class="text-gray-500 font-medium">4.8 · Basado en reseñas de Google Maps</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 bg-navy rounded-full flex items-center justify-center font-display font-black text-white text-lg">M</div>
+          <div>
+            <p class="font-bold text-navy text-sm">Marcos R.</p>
+            <p class="text-gray-400 text-xs">Chascomús · Hace 2 meses</p>
+          </div>
+          <div class="ml-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+        <div class="flex mb-3"><span class="star">★★★★★</span></div>
+        <p class="text-gray-600 text-sm leading-relaxed">"Excelente atención. Me ayudaron a encontrar el auto que buscaba dentro de mi presupuesto, y el trámite fue rápido. Los recomiendo sin dudas en Chascomús."</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 bg-accent rounded-full flex items-center justify-center font-display font-black text-white text-lg">V</div>
+          <div>
+            <p class="font-bold text-navy text-sm">Valeria G.</p>
+            <p class="text-gray-400 text-xs">Ranchos · Hace 3 meses</p>
+          </div>
+          <div class="ml-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+        <div class="flex mb-3"><span class="star">★★★★★</span></div>
+        <p class="text-gray-600 text-sm leading-relaxed">"Me dieron una muy buena toma por mi usado y el 0km que compré quedó financiado sin complicaciones. El trato es muy humano, nada de presiones."</p>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-11 h-11 bg-yellow-500 rounded-full flex items-center justify-center font-display font-black text-white text-lg">L</div>
+          <div>
+            <p class="font-bold text-navy text-sm">Lucas P.</p>
+            <p class="text-gray-400 text-xs">Lezama · Hace 1 mes</p>
+          </div>
+          <div class="ml-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          </div>
+        </div>
+        <div class="flex mb-3"><span class="star">★★★★★</span></div>
+        <p class="text-gray-600 text-sm leading-relaxed">"Compré un Cruze impecable. El auto estaba tal cual lo mostraron, sin sorpresas. La gestoría la hicieron ellos y en menos de una semana ya estaba todo listo."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO + MAPA -->
+<section id="contacto" class="bg-white py-20 px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <p class="section-label text-accent font-bold text-sm mb-2">Encontranos</p>
+      <h2 class="font-display font-black text-4xl sm:text-5xl text-navy uppercase">Cómo <span class="text-accent">Llegar</span></h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-stretch">
+      <div class="bg-silver-light rounded-2xl p-8">
+        <h3 class="font-display font-black text-2xl text-navy mb-6 uppercase">Seven<span class="text-accent">7</span> Cars</h3>
+
+        <div class="space-y-5">
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            </div>
+            <div>
+              <p class="font-bold text-navy text-sm uppercase tracking-wide mb-0.5">Dirección</p>
+              <p class="text-gray-600">Belgrano 973, B7136<br />Chascomús, Pcia. de Buenos Aires</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 7V5z"/></svg>
+            </div>
+            <div>
+              <p class="font-bold text-navy text-sm uppercase tracking-wide mb-0.5">Teléfono</p>
+              <a href="tel:02241436114" class="text-accent font-semibold hover:underline">02241 43-6114</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 bg-wa/15 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-wa-dark" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </div>
+            <div>
+              <p class="font-bold text-navy text-sm uppercase tracking-wide mb-0.5">WhatsApp</p>
+              <a href="https://wa.me/5492241436114" target="_blank" class="text-wa-dark font-semibold hover:underline">+54 9 2241 436114</a>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-11 h-11 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div>
+              <p class="font-bold text-navy text-sm uppercase tracking-wide mb-0.5">Horarios</p>
+              <p class="text-gray-600">Lunes a Sábado: 9:00 – 13:00 hs<br /><span class="text-gray-400 text-sm">Domingos: Cerrado</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3 mt-8">
+          <a href="https://wa.me/5492241436114?text=Hola%20Seven7%2C%20quiero%20consultar%20sobre%20autos"
+             target="_blank"
+             class="flex-1 flex items-center justify-center gap-2 bg-wa hover:bg-wa-dark text-white font-bold py-3.5 rounded-xl transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Escribir por WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Belgrano+973+Chascomus+Buenos+Aires"
+             target="_blank"
+             class="flex-1 flex items-center justify-center gap-2 border-2 border-navy text-navy hover:bg-navy hover:text-white font-bold py-3.5 rounded-xl transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Cómo llegar
+          </a>
+        </div>
+      </div>
+
+      <!-- Mapa -->
+      <div class="map-wrapper min-h-[400px]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3159.7!2d-58.0146!3d-35.5703!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95a5d3ac2e0b2a1f%3A0x0!2sBelgrano%20973%2C%20B7136%20Chascom%C3%BAs%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1680000000000!5m2!1ses-419!2sar"
+          width="100%"
+          height="100%"
+          style="border:0; min-height:420px;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Ubicación Seven7 Cars – Belgrano 973, Chascomús">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="gradient-navy py-10 px-4 sm:px-6 border-t border-white/10">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 bg-accent rounded-lg flex items-center justify-center font-display font-black text-white text-lg leading-none">
+        S<span class="text-yellow-400">7</span>
+      </div>
+      <div>
+        <div class="font-display font-black text-white text-lg tracking-wide leading-none">SEVEN<span class="text-accent">7</span> Cars</div>
+        <div class="text-silver/50 text-xs">La agencia multimarca de Chascomús</div>
+      </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-6 text-sm text-silver/60">
+      <a href="#catalogo" class="hover:text-white transition-colors">Catálogo</a>
+      <a href="#nosotros" class="hover:text-white transition-colors">Nosotros</a>
+      <a href="#resenas" class="hover:text-white transition-colors">Reseñas</a>
+      <a href="#contacto" class="hover:text-white transition-colors">Contacto</a>
+    </div>
+    <div class="text-silver/40 text-xs text-center">
+      © 2025 Seven7 Cars · Belgrano 973, Chascomús, Bs. As.
+    </div>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
